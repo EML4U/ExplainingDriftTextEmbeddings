@@ -1,4 +1,4 @@
-# ExplainingDriftTextEmbeddings
+# Explaining Drift in Text Data with Document Embeddings
 
 ## Developer Information
 
