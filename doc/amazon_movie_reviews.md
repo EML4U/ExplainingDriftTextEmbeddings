@@ -29,6 +29,9 @@ print('last text:  ', data.get_text(7911683)[:100]) # 100 characters of last tex
 # last text:   Little darlings looking I saw this movie when I was in high school and loved Tatum O'neal and Kristy
 ```
 
+Regarding to the original file, the texts are taken from the fields 'summary' and 'text',
+see [code](https://github.com/EML4U/ExplainingDriftTextEmbeddings/blob/a9d833ba28fb46959901d081b44338f3c8499ec9/data/amazon_movie_sorter.py#L36).
+
 #### Accessing BoW50 embeddings (Bag of Words with 50 dimensions)
 
 Texts are available for the IDs [84090, 7911683], as the first 3 years are not included.
@@ -83,7 +86,7 @@ print('distance sameA2 sameB2', pairwise_distances([data.get_bow50(sameA2)], [da
 
 #### Accessing metadata
 
-Metadata is available for both, text and raw.
+Metadata is available for both, text (raw) and bow50.
 Equal IDs result in equal metadata.
 
 ```python
