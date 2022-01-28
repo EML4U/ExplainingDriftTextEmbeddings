@@ -6,7 +6,9 @@
 
 ## Developer Information
 
-- Folders
+- Goal: Reusable, complete and documented code (good for developers, reviewers, everyone)
+- If you add new classes, please provide minimal code examples, put them into the `doc` directory and add a link above.
+- Directories
     - `data`: Classes for data access and generation (e.g. create, modify, read embeddings)
     - `doc`: Documentation (e.g. how to read data)
     - `explanations`: Classes for the explanation process (e.g. handling ml models, generate explanations)
