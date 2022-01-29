@@ -14,6 +14,7 @@
     - `doc`: Documentation (e.g. how to read data)
     - `explanations`: Classes for the explanation process (e.g. handling ml models, generate explanations)
     - `notebooks` User interface (e.g. combine class instances into a process generating explanations)
+    - `scripts`: Small sets of commands (e.g. to synchronize repositories)
 - How to name your code: [PEP 8 - Style Guide for Python Code](https://www.python.org/dev/peps/pep-0008/#package-and-module-names)
 
 ## Acknowledgments
