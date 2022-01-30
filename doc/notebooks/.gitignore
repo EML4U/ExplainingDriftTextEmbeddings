@@ -1,3 +1,21 @@
 # Notebooks for documentation, which should not be modified if they were just edited for testing.
 # You can add modifications by using the git -f parameter.
-wordcloud.ipynb
+
+*.ipynb
+
+
+
+# Source: https://raw.githubusercontent.com/github/gitignore/main/community/Python/JupyterNotebooks.gitignore
+
+# gitignore template for Jupyter Notebooks
+# website: http://jupyter.org/
+
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+# IPython
+profile_default/
+ipython_config.py
+
+# Remove previous ipynb_checkpoints
+#   git rm -r .ipynb_checkpoints/
