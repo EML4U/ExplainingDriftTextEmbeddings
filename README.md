@@ -4,7 +4,6 @@
 
 - Data: Currently stored at [Google Drive](https://drive.google.com/drive/folders/1NdfbAkH-YRpHul4uwsIN3_O5T_VQmGY1)
 - Data: [Amazon movie reviews](doc/amazon_movie_reviews.md)
-- Data: [Dimension reduction](doc/notebooks/Reduction.ipynb)
 - Explanations: [Wordclouds](doc/notebooks/wordcloud.ipynb)
 
 ## Developer Information
