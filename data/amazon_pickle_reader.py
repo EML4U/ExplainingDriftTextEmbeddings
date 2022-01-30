@@ -11,17 +11,16 @@
 # print(data.get_bow50(84090))
 # print(data.get_text(84090, metadata=True))
 # print(data.get_bow50(84090, metadata=True))
-#
-# Metadata keys:
-# [0] helpfulness
-# [1] score [0, 4] (corresponding to [1, 5] stars)
-# [2] date
-# [3] entry number in original file from stanford.edu
-# [4] id
 
 import pickle
 
 class AmazonPickleReader:
+    
+    META_HELPFULNESS = 0
+    META_SCORE = 1
+    META_DATE = 2
+    META_ORIGINAL_NO = 3
+    META_ID = 4
     
     def __init__(self, data_directory):
         self.data_directory = data_directory
