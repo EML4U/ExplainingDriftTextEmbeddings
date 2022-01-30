@@ -3,8 +3,9 @@
 ## Documentation
 
 - Data: Currently stored at [Google Drive](https://drive.google.com/drive/folders/1NdfbAkH-YRpHul4uwsIN3_O5T_VQmGY1)
-- Data: [Amazon movie reviews](doc/amazon_movie_reviews.md)
-- Explanations: [Wordclouds](doc/notebooks/wordcloud.ipynb)
+- How to access [Amazon movie reviews](doc/amazon_movie_reviews.md)
+- How to [reduce dimensions](doc/notebooks/reduction.ipynb)
+- How to create [Wordclouds](doc/notebooks/wordcloud.ipynb)
 
 ## Developer Information
 

@@ -3,6 +3,7 @@
 #
 # The preprocessed data was sorted by time and rounded by hour [1], resulting in new identifiers "raw_id".
 # The BoW-50 data does not contain 84,090 entries, mainly (by rounding) from reviews between 1997 and 1999.
+# Author: https://github.com/adibaba
 #
 # Example:
 # data = AmazonPickleReader('/tmp/')
