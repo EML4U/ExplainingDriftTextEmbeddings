@@ -1,3 +1,6 @@
+# Class to extract tokens out of texts and to create wordclouds.
+# Author: https://github.com/adibaba
+
 from gensim.utils import simple_preprocess
 from wordcloud import WordCloud, STOPWORDS
 from collections import Counter
