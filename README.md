@@ -5,6 +5,7 @@
 - Data: Currently stored at [Google Drive](https://drive.google.com/drive/folders/1NdfbAkH-YRpHul4uwsIN3_O5T_VQmGY1)
 - How to access [Amazon movie reviews](doc/amazon_movie_reviews.md)
 - How to get [Amazon movie reviews](doc/notebooks/amazon_pickle_splitter.ipynb) items, which are equally splitted 
+- How to [store interim results](doc/notebooks/interim_storage.ipynb)
 - How to [reduce dimensions](doc/notebooks/reduction.ipynb)
 - How to create [Wordclouds](doc/notebooks/wordcloud.ipynb)
 
