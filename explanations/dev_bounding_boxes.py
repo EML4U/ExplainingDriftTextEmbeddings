@@ -32,12 +32,12 @@ class BoundingBoxes:
     def get_number_of_enclosed_dimensions(self, embedding):
         included = 0
         for index, value in enumerate(embedding):
-            if(value >= self.min[index] and value <= self.max[index]):
+            if(value >= self.min_[index] and value <= self.max_[index]):
                 included += 1
         return included
     
-    def get_min(self)
+    def get_min(self):
         return self.min_
     
-    def get_max(self)
+    def get_max(self):
         return self.max_
