@@ -1,6 +1,10 @@
 # Add your additional rules here
 
 
+# Never put large data files to GitHub
+data/
+
+
 # Source: https://raw.githubusercontent.com/github/gitignore/752b7678db497edb377fa982ded0c70035393794/Python.gitignore
 
 # Byte-compiled / optimized / DLL files

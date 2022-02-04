@@ -3,7 +3,7 @@
 ## Documentation
 
 - Data: Currently stored at [Google Drive](https://drive.google.com/drive/folders/1NdfbAkH-YRpHul4uwsIN3_O5T_VQmGY1)
-- Data access
+- How to configure [file storage](doc/notebooks/file_storage.ipynb) and the default directory to read data
 - How to access [Amazon movie reviews](doc/amazon_movie_reviews.md)
 - How to get [Amazon movie reviews](doc/notebooks/amazon_pickle_splitter.ipynb) items, which are equally splitted 
 - How to [store interim results](doc/notebooks/interim_storage.ipynb)
