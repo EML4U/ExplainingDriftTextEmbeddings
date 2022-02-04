@@ -3,7 +3,8 @@
 
 # Never put large data files to GitHub
 data/
-
+# File to change the data directory (see access/file_storage.py)
+data-directory.txt
 
 # Source: https://raw.githubusercontent.com/github/gitignore/752b7678db497edb377fa982ded0c70035393794/Python.gitignore
 
