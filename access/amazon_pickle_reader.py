@@ -27,6 +27,7 @@ class AmazonPickleReader:
         self.data_directory = data_directory
         self.filename_raw   = 'amazon_raw.pickle'
         self.filename_bow50 = 'amazon_bow_50.pickle'
+        self.originalno_to_rawid = None
         self.data_raw   = None
         self.data_bow50 = None
 
@@ -63,3 +64,10 @@ class AmazonPickleReader:
             return self.get_all_bow50()["data"][1][bow50_id]
         else:
             return self.get_all_bow50()["data"][0][bow50_id]
+
+    def get_raw_id(self, original_no):
+        if(self.originalno_to_rawid is None):
+            self.originalno_to_rawid = {}
+            for tup in self.get_all_raw()[1]:
+                self.originalno_to_rawid[tup[self.META_ORIGINAL_NO]] = tup[self.META_ID]
+        return self.originalno_to_rawid[original_no]
