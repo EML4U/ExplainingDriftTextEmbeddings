@@ -2,10 +2,12 @@
 
 ## Documentation
 
-- Data: Currently stored at [Google Drive](https://drive.google.com/drive/folders/1NdfbAkH-YRpHul4uwsIN3_O5T_VQmGY1)
 - How to configure [file storage](doc/notebooks/file_storage.ipynb) and the default directory to read data
-- How to access [Amazon movie reviews](doc/amazon_movie_reviews.md)
-- How to get [Amazon movie reviews](doc/notebooks/amazon_pickle_splitter.ipynb) items, which are equally splitted 
+- Amazon movie reviews
+    - [Data overview](doc/amazon_movie_reviews.md)
+    - How to read with [Amazon Pickle_Reader](doc/notebooks/amazon_pickle_reader.ipynb) and access texts, embeddings, metadata
+    - How to read with [Amazon Pickle_Splitter](doc/notebooks/amazon_pickle_splitter.ipynb) and get items, which are equally splitted 
+    - Data is currently stored at [Google Drive](https://drive.google.com/drive/folders/1NdfbAkH-YRpHul4uwsIN3_O5T_VQmGY1)
 - How to [store interim results](doc/notebooks/interim_storage.ipynb)
 - How to [reduce dimensions](doc/notebooks/reduction.ipynb)
 - How to create [Wordclouds](doc/notebooks/wordcloud.ipynb)
