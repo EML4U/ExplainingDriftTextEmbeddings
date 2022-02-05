@@ -13,6 +13,7 @@
 # print(data.get_bow50(84090, metadata=True))
 
 import pickle
+import os.path
 
 class AmazonPickleReader:
     
@@ -37,13 +38,13 @@ class AmazonPickleReader:
         
     def get_all_raw(self):
         if(self.data_raw is None):
-            with open(self.data_directory + self.filename_raw, 'rb') as handle:
+            with open(os.path.join(self.data_directory, self.filename_raw), 'rb') as handle:
                 self.data_raw = pickle.load(handle)
         return self.data_raw
     
     def get_all_bow50(self):
         if(self.data_bow50 is None):
-            with open(self.data_directory + self.filename_bow50, 'rb') as handle:
+            with open(os.path.join(self.data_directory, self.filename_bow50), 'rb') as handle:
                 self.data_bow50 = pickle.load(handle)
         return self.data_bow50
 

@@ -7,4 +7,4 @@ if ! test -f "LICENSE"; then
     exit
 fi
 
-rsync -aP --exclude={'__pycache__','.*'} ./ eml4u@eml4u-experiment.cs.upb.de:/home/eml4u/EML4U/notebooks/ExplainingDriftTextEmbeddings/
+rsync -aP --exclude={'data','__pycache__','.*'} ./ eml4u@eml4u-experiment.cs.upb.de:/home/eml4u/EML4U/notebooks/ExplainingDriftTextEmbeddings/
