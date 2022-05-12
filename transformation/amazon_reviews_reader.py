@@ -1,45 +1,47 @@
-# Reader for Amazon movie reviews
+# Source: https://github.com/EML4U/Clustering/blob/1bebd2e9febec60245cc2ef66a5324b9dcd9497e/classes/amazon_reviews_reader.py
+# Author: https://github.com/adibaba
 #
-# https://snap.stanford.edu/data/movies.txt.gz (3321791660 bytes, 3 GB)
+# Downloader and iterator to read Amazon movie reviews
+# https://snap.stanford.edu/data/movies.txt.gz
 # https://snap.stanford.edu/data/web-Movies.html
 #
-# Notes: Number starts with 1. Mode "text" concatenates fields "summary" and "text"
-# Version 2: Changelog: Removed method download(), added mode "typed".
-# Version 1: https://github.com/EML4U/Drift-detector-comparison/blob/1.0.0/word2vec/amazon_reviews_reader.py
-# Author: Adrian Wilke https://github.com/adibaba
+# Download example:
+# from amazon_reviews_reader import AmazonReviewsReader
+# AmazonReviewsReader.download("/tmp")
 #
+# Iterator
+# Modes:
+# fields, text (summary and text), tokens (words), tagdoc
 # Example:
 # from amazon_reviews_reader import AmazonReviewsReader
-# for item in AmazonReviewsReader('movies.txt.gz', AmazonReviewsReader.MODE_TYPED, max_docs=3):
-#    print(item[AmazonReviewsReader.KEY_SCORE], end=' ')
-#    print(item[AmazonReviewsReader.KEY_TIME].year, end=' #')
-#    print(item[AmazonReviewsReader.KEY_NUMBER])
-#    print(item[AmazonReviewsReader.KEY_SUMMARY], item[AmazonReviewsReader.KEY_TEXT], sep='  |  ')
-#    print()
+# for item in AmazonReviewsReader("/tmp/movies.txt.gz", "fields", max_docs=3):
+#     print(item)
 
 from datetime import datetime
 import gensim
 import gzip
+import os
+import subprocess
 
 # Stream corpus (memory efficient)
 # See: https://radimrehurek.com/gensim/auto_examples/core/run_corpora_and_vector_spaces.html#corpus-streaming-one-document-at-a-time
 class AmazonReviewsReader:
-    
-    MODE_FIELDS = "fields"
-    MODE_TYPED  = "typed"
-    MODE_TEXT   = "text"
-    MODE_TOKENS = "tokens"
-    MODE_TAGDOC = "tagdoc"
-    
-    KEY_PRODUCT_ID   = 'productId'
-    KEY_USER_ID      = 'userId'
-    KEY_PROFILE_NAME = 'profileName'
-    KEY_HELPFULNESS  = 'helpfulness'
-    KEY_SCORE        = 'score'
-    KEY_TIME         = 'time'
-    KEY_SUMMARY      = 'summary'
-    KEY_TEXT         = 'text'
-    KEY_NUMBER       = 'number'
+
+    # Downloads file if not available
+    #
+    # https://snap.stanford.edu/data/web-Movies.html
+    # 3321791660 bytes / 3 GB
+    @staticmethod
+    def download(directory, url="https://snap.stanford.edu/data/movies.txt.gz"):
+        file_path = os.path.join(directory, url.rsplit('/', 1)[1])
+        if not os.path.isfile(file_path):
+            print("Download", url, directory)
+        # https://www.gnu.org/software/wget/manual/wget.html#Download-Options
+        # -c  --continue
+        # -nv --no-verbose
+        # -P  --directory-prefix=prefix
+        subprocess.run(["wget", "-c", "-nv", "-P", directory, url])
+
 
     def __init__(self, file, mode, max_docs=-1, min_year=-1, max_year=-1, min_score=-1, max_score=-1):
         self.file = file
@@ -101,33 +103,23 @@ class AmazonReviewsReader:
                         break
                     
                     # Mode fields
-                    if(self.mode == self.MODE_FIELDS):
-                        self.entry[self.KEY_NUMBER] = i
+                    if(self.mode == "fields"):
+                        self.entry["number"] = i
                         yield self.entry
                         continue
                     
-                    # Mode typed
-                    if(self.mode == self.MODE_TYPED):
-                        helpfulness = self.entry[self.KEY_HELPFULNESS].split('/')
-                        self.entry[self.KEY_HELPFULNESS] = (int(helpfulness[0]), int(helpfulness[1]))
-                        self.entry[self.KEY_SCORE] = int(float(self.entry[self.KEY_SCORE]))
-                        self.entry[self.KEY_TIME] = datetime.fromtimestamp(int(self.entry[self.KEY_TIME]))
-                        self.entry[self.KEY_NUMBER] = i
-                        yield self.entry
-                        continue
-        
                     # Mode text
-                    if(self.mode == self.MODE_TEXT):
-                        yield self.entry[self.KEY_SUMMARY] + " " + self.entry[self.KEY_TEXT]
+                    if(self.mode == "text"):
+                        yield self.entry["summary"] + " " + self.entry["text"]
                         continue
                     
                     # Mode tokens
-                    tokens = gensim.utils.simple_preprocess(self.entry[self.KEY_SUMMARY] + " " + self.entry[self.KEY_TEXT])
-                    if(self.mode == self.MODE_TOKENS):
+                    tokens = gensim.utils.simple_preprocess(self.entry["summary"] + " " + self.entry["text"])
+                    if(self.mode == "tokens"):
                         yield tokens
                         continue
                     
                     # Mode tagdoc
-                    if(self.mode != self.MODE_TAGDOC):
+                    if(self.mode != "tagdoc"):
                         raise ValueError("Unknown mode", self.mode)
                     yield gensim.models.doc2vec.TaggedDocument(tokens, [c])
