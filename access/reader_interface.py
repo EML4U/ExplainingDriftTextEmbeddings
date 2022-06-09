@@ -15,17 +15,20 @@ class ReaderInterface:
         pass
     
     def get_distribution_ids(self):
-        """Returns a list of available distribution IDs."""
+        """
+        Returns a list of available distribution IDs.
+        Convention: Distribution IDs should be integers starting at 0.
+        """
         pass
     
-    def get_dataset_ids(self, distribution_id):
+    def get_item_ids(self, distribution_id):
         """Returns a list of dataset IDs for a given distribution ID."""
         pass
 
-    def get_text(self, distribution_id, dataset_id):
-        """Returns the text for the given IDs."""
+    def get_text(self, item_id):
+        """Returns the text for the given dataset ID."""
         pass
 
-    def get_embeddings(self, distribution_id, dataset_id):
-        """Returns an embeddings vector for given IDs."""
+    def get_embeddings(self, item_id):
+        """Returns an embeddings vector for the given dataset ID."""
         pass
