@@ -38,12 +38,14 @@ class AmazonPickleReader:
         
     def get_all_raw(self):
         if(self.data_raw is None):
+            print('AmazonPickleReader: Reading raw data')
             with open(os.path.join(self.data_directory, self.filename_raw), 'rb') as handle:
                 self.data_raw = pickle.load(handle)
         return self.data_raw
     
     def get_all_bow50(self):
         if(self.data_bow50 is None):
+            print('AmazonPickleReader: Reading bow50 data')
             with open(os.path.join(self.data_directory, self.filename_bow50), 'rb') as handle:
                 self.data_bow50 = pickle.load(handle)
         return self.data_bow50

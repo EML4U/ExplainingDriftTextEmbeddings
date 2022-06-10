@@ -1,5 +1,5 @@
-from reader_interface import ReaderInterface
-from amazon_pickle_reader import AmazonPickleReader
+from .reader_interface import ReaderInterface
+from .amazon_pickle_reader import AmazonPickleReader
 import pickle
 
 class AmoreDoctovecReader(ReaderInterface):
@@ -21,6 +21,8 @@ class AmoreDoctovecReader(ReaderInterface):
         """
         self.distributions_file = options['distributions_file']
         self.amazon_pickle_reader = AmazonPickleReader(options['data_directory'])
+        print('AmoreDoctovecReader distributions file:', self.distributions_file)
+        print('AmoreDoctovecReader data directory:    ', options['data_directory'])
     
     def get_distribution_ids(self):
         """
@@ -46,6 +48,7 @@ class AmoreDoctovecReader(ReaderInterface):
     def get_distributions(self):
         """Loads and caches distribution IDs"""
         if(self.distribution_ids is None):
+            print('AmoreDoctovecReader: Loading distribution file:', self.distributions_file)
             with open(self.distributions_file, "rb") as f:
                 self.distribution_ids = pickle.load(f)
         return self.distribution_ids
