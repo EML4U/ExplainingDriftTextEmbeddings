@@ -32,3 +32,7 @@ class ReaderInterface:
     def get_embeddings(self, item_id):
         """Returns an embeddings vector for the given dataset ID."""
         pass
+
+    def get_dimensions(self):
+        """Returns the number of embeddings dimensions"""
+        pass

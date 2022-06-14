@@ -44,6 +44,10 @@ class AmoreDoctovecReader(ReaderInterface):
         """Returns an embeddings vector for the given item ID."""
         raw_id = self.amazon_pickle_reader.get_raw_id(dataset_id)
         return self.amazon_pickle_reader.get_bow50(raw_id)
+
+    def get_dimensions(self):
+        """Returns the number of embeddings dimensions"""
+        return len(self.get_embeddings(self.get_item_ids(self.get_distribution_ids()[0])[0]))
     
     def get_distributions(self):
         """Loads and caches distribution IDs"""
