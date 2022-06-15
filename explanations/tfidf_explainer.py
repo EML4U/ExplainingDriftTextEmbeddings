@@ -26,16 +26,6 @@ class TfidfExplainer(ExplainerInterface):
         Compares items of distribution A with items of distribution B.
         Returns a dictionary of words and scores for tokens.
         """
-        vectorizer = TfidfVectorizer(stop_words=_stop_words.ENGLISH_STOP_WORDS)
-        
-        # Corpus contains docs of A and B
-        corpus = []
-        for item_id in reader.get_distributions()[dist_a]:
-            corpus.append(reader.get_text(item_id))
-        for item_id in reader.get_distributions()[dist_b]:
-            corpus.append(reader.get_text(item_id))
-
-        fit = vectorizer.fit(corpus)
         
         # Collect item texts
         items_a = []
@@ -45,11 +35,16 @@ class TfidfExplainer(ExplainerInterface):
         for item_id in item_ids_b:
             items_b.append(reader.get_text(item_id))
         
+        # TF-IDF
+        vectorizer = TfidfVectorizer(stop_words=_stop_words.ENGLISH_STOP_WORDS)
+        fit = vectorizer.fit(items_a + items_b)
+        feature_names = vectorizer.get_feature_names()
+        
         # Weighted TF-IDF values
-        transformed_a = vectorizer.transform(items_a)
-        transformed_b = vectorizer.transform(items_b)
-        tokens_scores_a = self.get_weighted_tokens(transformed_a)
-        tokens_scores_b = self.get_weighted_tokens(transformed_b)
+        doc_term_matrix_a = vectorizer.transform(items_a)
+        doc_term_matrix_b = vectorizer.transform(items_b)
+        tokens_scores_a = self.get_weighted_tokens(doc_term_matrix_a, len(feature_names))
+        tokens_scores_b = self.get_weighted_tokens(doc_term_matrix_b, len(feature_names))
         
         # Compare
         compared = {}
@@ -63,7 +58,6 @@ class TfidfExplainer(ExplainerInterface):
         # Token IDs to tokens, limit by given maximum
         max_items = max_results
         token_weights = {}
-        feature_names = vectorizer.get_feature_names()
         for item in sorted_dict.items():
             token_weights[feature_names[item[0]]] = item[1]
             max_items -= 1
@@ -72,24 +66,25 @@ class TfidfExplainer(ExplainerInterface):
         
         return token_weights
     
-    def get_weighted_tokens(self, vectorizer):
-        c = vectorizer.tocoo()
+    def get_weighted_tokens(self, doc_term_matrix, tokens_size):
+        c = doc_term_matrix.tocoo()
 
+        # Sum up TF-IDF values of single tokens in doc-term-matrix (cluster of docs)
         counter_tokens = {}
         counter_itidf  = {}
         for i in range(len(c.data)):
             token_index = c.col[i]
             tfidf_value = c.data[i]
-            counter_tokens[token_index] = counter_tokens.get(token_index, 0) + 1
+            #counter_tokens[token_index] = counter_tokens.get(token_index, 0) + 1
             counter_itidf[token_index]  = counter_itidf.get(token_index, 0) + tfidf_value
 
+        # TODO: Dividing every result by the same number makes no sense; does not change overall result -> modify
         results = {}
         for token_index in counter_itidf:
             # Bad solution:
             # Mean could be improved to reflect in how many docs a token appears (TODO)
             #results[token_index] = counter_itidf[token_index] / counter_tokens[token_index]
             
-            # Better results, still to check:
-            results[token_index] = counter_itidf[token_index]
+            results[token_index] = counter_itidf[token_index] / tokens_size
         
         return results
