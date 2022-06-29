@@ -16,12 +16,13 @@ class TfidfExplainer(ExplainerInterface):
         Initializes reader with options in dictionary.
         
         Options:
-        'key': description
+        'max_results': Number of max results to be retruned by get_token_dict
         """
-        pass
+        self.max_results = options['max_results']
+        print('TfidfExplainer max_results:', self.max_results)
     
     
-    def get_token_dict(self, dist_a, dist_b, item_ids_a, item_ids_b, reader, max_results):
+    def get_token_dict(self, item_ids_a, item_ids_b, reader):
         """
         Compares items of distribution A with items of distribution B.
         Returns a dictionary of words and scores for tokens.
@@ -51,12 +52,12 @@ class TfidfExplainer(ExplainerInterface):
         for item_a in tokens_scores_a.items():
             compared[item_a[0]] = item_a[1] - tokens_scores_b.get(item_a[0], 0)
         
-        # Sort by TF-IDF
+        # Sort by TF-IDF values
         sorted_tuples = sorted(compared.items(), key=lambda item: item[1], reverse=True)
         sorted_dict = {k: v for k, v in sorted_tuples}
 
         # Token IDs to tokens, limit by given maximum
-        max_items = max_results
+        max_items = self.max_results
         token_weights = {}
         for item in sorted_dict.items():
             token_weights[feature_names[item[0]]] = item[1]
