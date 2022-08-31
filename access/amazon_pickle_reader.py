@@ -30,10 +30,10 @@ class AmazonPickleReader:
         self.data_raw   = None
         self.data_bow50 = None
 
-    def set_filename_raw(filename):
+    def set_filename_raw(self, filename):
         self.filename_raw = filename
         
-    def set_filename_bow_50(filename):
+    def set_filename_bow_50(self, filename):
         self.filename_bow50 = filename
         
     def get_all_raw(self):
