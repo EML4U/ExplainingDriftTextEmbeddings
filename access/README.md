@@ -5,12 +5,16 @@
 - **reader_interface.py**  
   Interface for readers to implement
 - **amazon_doc2vec_reader.py**  
+  Implements the reader interface for Amazon Doc2Vec tests
+- **amore_doc2vec_reader.py**  
   Implements the reader interface for AMORE Doc2Vec
 
 ## Utilities
 
 - **amazon_pickle_reader.py**  
-  Reader for AMORE pickle files containing texts and Doc2Vec embeddings
+  Reader for Amazon pickle files containing texts and Doc2Vec embeddings
+- **amore_reader.py**  
+  Reader for AMORE benchmark text files
 - **file_storage.py**  
   Files locations for reusage
 - **interim_storage.py**  

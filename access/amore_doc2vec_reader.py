@@ -1,8 +1,9 @@
 from .reader_interface import ReaderInterface
 from .amazon_pickle_reader import AmazonPickleReader
+from .amore_reader import AmoreReader
 import pickle
 
-class AmazonDoctovecReader(ReaderInterface):
+class AmoreDoctovecReader(ReaderInterface):
     """
     Reads Amazon Movie Reviews texts and Doc2Vec embeddings.
     Note: Years 1997 to 1999 are not included in the embeddings.
@@ -11,29 +12,32 @@ class AmazonDoctovecReader(ReaderInterface):
     """
     
     def __init__(self):
-        self.distribution_ids = None
+        self.data = None
     
     def initialize(self, options):
         """
         Options:
         'data_directory': Directory containing the files amazon_raw.pickle and amazon_bow_50.pickle.
-        'distributions_file': File containing the file amore_test_1.pickle.
+        'amore_directory': Directory containing text files of AMORE benchmark.
+        'amore_benchmark_id': ID of AMORE benchmark, e.g. '1'.
         """
-        self.distributions_file = options['distributions_file']
+        self.amore_directory = options['amore_directory']
+        self.amore_benchmark_id = options['amore_benchmark_id']
         self.amazon_pickle_reader = AmazonPickleReader(options['data_directory'])
-        print('AmazonDoctovecReader distributions file:', self.distributions_file)
-        print('AmazonDoctovecReader data directory:    ', options['data_directory'])
+        print('AMORE directory:                   ', self.amore_directory)
+        print('AMORE benchmark ID:                ', self.amore_benchmark_id)
+        print('AmoreDoctovecReader data directory:', options['data_directory'])
     
     def get_distribution_ids(self):
         """
         Returns a list of available distribution IDs.
         Convention: Distribution IDs should be integers starting at 0.
         """
-        return list(self.get_distributions().keys())
+        return list(self.load_data().keys())
     
     def get_item_ids(self, distribution_id):
         """Returns a list of item IDs for a given distribution ID."""
-        return self.get_distributions()[distribution_id]
+        return self.load_data()[distribution_id]
     
     def get_text(self, dataset_id):
         """Returns the text for the given item ID."""
@@ -49,10 +53,11 @@ class AmazonDoctovecReader(ReaderInterface):
         """Returns the number of embeddings dimensions"""
         return len(self.get_embeddings(self.get_item_ids(self.get_distribution_ids()[0])[0]))
     
-    def get_distributions(self):
-        """Loads and caches distribution IDs"""
-        if(self.distribution_ids is None):
-            print('AmazonDoctovecReader: Loading distribution file:', self.distributions_file)
-            with open(self.distributions_file, "rb") as f:
-                self.distribution_ids = pickle.load(f)
-        return self.distribution_ids
+    def load_data(self):
+        """Loads data and caches in a dictionary distributionID-to-itemID"""
+        if(self.data is None):
+            self.data = {}
+            reader = AmoreReader(self.amore_directory)
+            self.data[0] = reader.get_set_a_ids(self.amore_benchmark_id)
+            self.data[1] = reader.get_set_b_ids(self.amore_benchmark_id)
+        return self.data
