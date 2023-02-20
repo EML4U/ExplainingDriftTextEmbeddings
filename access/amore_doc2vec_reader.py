@@ -56,6 +56,7 @@ class AmoreDoctovecReader(ReaderInterface):
     def load_data(self):
         """Loads data and caches in a dictionary distributionID-to-itemID"""
         if(self.data is None):
+            print('Loading embeddngs')
             self.data = {}
             reader = AmoreReader(self.amore_directory)
             self.data[0] = reader.get_set_a_ids(self.amore_benchmark_id)

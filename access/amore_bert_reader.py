@@ -23,14 +23,18 @@ class AmoreBertReader(ReaderInterface):
         'data_directory': Directory containing the files amazon_raw.pickle and amazon_all.pickle.
         'amore_directory': Directory containing text files of AMORE benchmark.
         'amore_benchmark_id': ID of AMORE benchmark, e.g. '1'.
+        (optional) 'amazon_pickle_reader': Instance of AmazonPickleReader.
         """
         self.amore_directory = options['amore_directory']
         self.amore_benchmark_id = options['amore_benchmark_id']
         self.data_directory = options['data_directory']
-        self.amazon_pickle_reader = AmazonPickleReader(options['data_directory'])
+        if 'amazon_pickle_reader' in options:
+            self.amazon_pickle_reader = options['amazon_pickle_reader']
+        else:
+            self.amazon_pickle_reader = AmazonPickleReader(options['data_directory'])
         print('AMORE directory:                   ', self.amore_directory)
         print('AMORE benchmark ID:                ', self.amore_benchmark_id)
-        print('AmoreDoctovecReader data directory:', options['data_directory'])
+        print('AmoreDoctovecReader data directory:', self.data_directory)
     
     def get_distribution_ids(self):
         """
@@ -68,6 +72,7 @@ class AmoreBertReader(ReaderInterface):
     def load_data(self):
         """Loads data and caches in a dictionary distributionID-to-itemID"""
         if(self.data is None):
+            print('Loading embeddngs')
             self.data = {}
             reader = AmoreReader(self.amore_directory)
             self.data[0] = reader.get_set_a_ids(self.amore_benchmark_id)

@@ -22,7 +22,7 @@ class ReaderInterface:
         pass
     
     def get_item_ids(self, distribution_id):
-        """Returns a list of dataset IDs for a given distribution ID."""
+        """Returns a list of item IDs for a given distribution ID."""
         pass
 
     def get_text(self, item_id):
@@ -34,5 +34,5 @@ class ReaderInterface:
         pass
 
     def get_dimensions(self):
-        """Returns the number of embeddings dimensions"""
+        """Returns the number of embeddings dimensions."""
         pass

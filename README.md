@@ -1,5 +1,9 @@
 # Explaining Drift in Text Data with Document Embeddings
 
+This repository provides a software pipeline in order to explain drift between two sets of documents using embeddings.
+
+First experiments indicate that [BERT document embeddings](experiments/dev_pipeline-bert.ipynb) outperform [Doc2Vec document embeddings](experiments/dev_pipeline-doc2vec.ipynb).
+
 ## Documentation
 
 - How to configure [file storage](doc/notebooks/file_storage.ipynb) and the default directory to read data
@@ -27,5 +31,4 @@
 
 ## Acknowledgments
 
-This  work  has  been  supported  by  the  German  FederalMinistry of Education and Research (BMBF) within the project [EML4U](https://eml4u.github.io/) under the grant no 01IS19080 A and B.
-
+This  work  has  been  supported  by  the  German  FederalMinistry of Education and Research (BMBF) within the project [EML4U](https://eml4u.github.io/) under the grant no 01IS19080B.

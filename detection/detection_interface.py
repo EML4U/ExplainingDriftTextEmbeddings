@@ -14,10 +14,10 @@ class DetectionInterface:
     
     def set_reader(self):
         """
-        Sets a ReaderInterface implementation to get data.
+        Sets a ReaderInterface implementation to access data.
         """
         pass
     
     def select_item_ids(self, distribution_a_id, distribution_b_id):
-        """Returns a list of dataset IDs of distribution B."""
+        """Detects and returns a list of dataset IDs of distribution B."""
         pass
