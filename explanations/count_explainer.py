@@ -37,8 +37,12 @@ class CountExplainer(ExplainerInterface):
         tokens_a = self.get_tokens(texts_a)
         tokens_b = self.get_tokens(texts_b)
         
-        # Remove tokens which occur often in both distributions
-        tokens = self.remove_tokens(tokens_a, tokens_b)
+        if(False):
+            # Remove tokens which occur often in both distributions
+            tokens = self.remove_tokens(tokens_a, tokens_b)
+        else:
+            # Difference of relative counts
+            tokens = self.relative_counts(tokens_a, tokens_b)
         
         # Sort by value
         sorted_tuples = sorted(tokens.items(), key=lambda item: item[1], reverse=True)
@@ -71,3 +75,21 @@ class CountExplainer(ExplainerInterface):
                 if(counter[token] >= counter_remove[token] * factor):
                     dict_[token] = counter[token]
         return Counter(dict_)
+    
+    
+    def relative_counts(self, counter_a, counter_b):
+        # Counter A to relative
+        dic = {}
+        for key in counter_a.keys():
+            dic[key] = counter_a[key] / len(counter_a)
+        a = Counter(dic)
+        # Counter B to relative
+        dic = {}
+        for key in counter_b.keys():
+            dic[key] = counter_b[key] / len(counter_b)
+        b = Counter(dic)
+        # Difference
+        dic = {}
+        for token in set(counter_a.keys()).union(set(counter_b.keys())):
+            dic[token] = b[token] - a[token]
+        return Counter(dic)
